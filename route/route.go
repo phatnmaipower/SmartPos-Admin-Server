@@ -41,32 +41,32 @@ func Init() *echo.Echo {
 	/**
 	Update admin info
 	*/
-	e.POST("/admins/updateOne", admins.UpdateAdmin)
+	e.PUT("/admins/updateOne", admins.UpdateAdmin)
 
 	/**
 	Update admin name
 	*/
-	e.POST("/admins/updateOne/name", admins.UpdateName)
+	e.PUT("/admins/updateOne/name", admins.UpdateName)
 
 	/**
 	Update admin password
 	*/
-	e.POST("/admins/updateOne/password", admins.UpdatePassword)
+	e.PUT("/admins/updateOne/password", admins.UpdatePassword)
 
 	/**
 	Update admin email
 	*/
-	e.POST("/admins/updateOne/email", admins.UpdateEmail)
+	e.PUT("/admins/updateOne/email", admins.UpdateEmail)
 
 	/**
 	Update admin role
 	*/
-	e.POST("/admins/updateOne/role", admins.UpdateRole)
+	e.PUT("/admins/updateOne/role", admins.UpdateRole)
 
 	/**
 	Update admin role
 	*/
-	e.POST("/admins/updateOne/image", admins.UpdateImage)
+	e.PUT("/admins/updateOne/image", admins.UpdateImage)
 
 	return e
 }

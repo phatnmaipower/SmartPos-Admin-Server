@@ -28,7 +28,7 @@ func GetAdmin(c echo.Context) error {
 	if err != nil {
 		log.Printf("Failed unmarshalling")
 		return c.JSON(http.StatusInternalServerError, reponse.UpdateResponse{
-			Status: "failed", Code: http.StatusInternalServerError, Data: err.Error(),
+			StatusText: "failed", Status: http.StatusInternalServerError, Data: err.Error(),
 		})
 	}
 
@@ -65,7 +65,7 @@ func UpdateAdmin(c echo.Context) error {
 	if err != nil {
 		log.Printf("Failed unmarshalling")
 		return c.JSON(http.StatusInternalServerError, reponse.UpdateResponse{
-			Status: "failed", Code: http.StatusInternalServerError, Data: err.Error(),
+			StatusText: "failed", Status: http.StatusInternalServerError, Data: err.Error(),
 		})
 	}
 
@@ -75,9 +75,9 @@ func UpdateAdmin(c echo.Context) error {
 
 	if admin == nil {
 		return c.JSON(http.StatusNotFound, reponse.UpdateResponse{
-			Status: "failed",
-			Code:   http.StatusNotFound,
-			Data:   "Admin does not exist, cannot update",
+			StatusText: "failed",
+			Status:     http.StatusNotFound,
+			Data:       "Admin does not exist, cannot update",
 		})
 	}
 
@@ -97,9 +97,9 @@ func UpdateAdmin(c echo.Context) error {
 	dbManager.Save(&admin)
 
 	return c.JSON(http.StatusOK, reponse.UpdateResponse{
-		Status: "success",
-		Code:   http.StatusOK,
-		Data:   admin,
+		StatusText: "success",
+		Status:     http.StatusOK,
+		Data:       admin,
 	})
 }
 
@@ -112,7 +112,7 @@ func UpdateEmail(c echo.Context) error {
 	if err != nil {
 		log.Printf("Failed unmarshalling")
 		return c.JSON(http.StatusInternalServerError, reponse.UpdateResponse{
-			Status: "failed", Code: http.StatusInternalServerError, Data: err.Error(),
+			StatusText: "failed", Status: http.StatusInternalServerError, Data: err.Error(),
 		})
 	}
 
@@ -122,17 +122,17 @@ func UpdateEmail(c echo.Context) error {
 
 	if admin == nil {
 		return c.JSON(http.StatusNotFound, reponse.UpdateResponse{
-			Status: "failed",
-			Code:   http.StatusNotFound,
-			Data:   "Admin does not exist, cannot update",
+			StatusText: "failed",
+			Status:     http.StatusNotFound,
+			Data:       "Admin does not exist, cannot update",
 		})
 	}
 
 	if requestData.Email == "" {
 		return c.JSON(http.StatusBadRequest, reponse.UpdateResponse{
-			Status: "BadRequest",
-			Code:   http.StatusBadRequest,
-			Data:   "Invalid input",
+			StatusText: "BadRequest",
+			Status:     http.StatusBadRequest,
+			Data:       "Invalid input",
 		})
 	}
 
@@ -140,9 +140,9 @@ func UpdateEmail(c echo.Context) error {
 	dbManager.Save(&admin)
 
 	return c.JSON(http.StatusOK, reponse.UpdateResponse{
-		Status: "success",
-		Code:   http.StatusOK,
-		Data:   admin,
+		StatusText: "success",
+		Status:     http.StatusOK,
+		Data:       admin,
 	})
 }
 
@@ -155,7 +155,7 @@ func UpdateName(c echo.Context) error {
 	if err != nil {
 		log.Printf("Failed unmarshalling")
 		return c.JSON(http.StatusInternalServerError, reponse.UpdateResponse{
-			Status: "failed", Code: http.StatusInternalServerError, Data: err.Error(),
+			StatusText: "failed", Status: http.StatusInternalServerError, Data: err.Error(),
 		})
 	}
 
@@ -165,17 +165,17 @@ func UpdateName(c echo.Context) error {
 
 	if admin == nil {
 		return c.JSON(http.StatusNotFound, reponse.UpdateResponse{
-			Status: "failed",
-			Code:   http.StatusNotFound,
-			Data:   "Admin does not exist, cannot update",
+			StatusText: "failed",
+			Status:     http.StatusNotFound,
+			Data:       "Admin does not exist, cannot update",
 		})
 	}
 
 	if requestData.Name == "" {
 		return c.JSON(http.StatusBadRequest, reponse.UpdateResponse{
-			Status: "BadRequest",
-			Code:   http.StatusBadRequest,
-			Data:   "Invalid input",
+			StatusText: "BadRequest",
+			Status:     http.StatusBadRequest,
+			Data:       "Invalid input",
 		})
 	}
 
@@ -183,9 +183,9 @@ func UpdateName(c echo.Context) error {
 	dbManager.Save(&admin)
 
 	return c.JSON(http.StatusOK, reponse.UpdateResponse{
-		Status: "success",
-		Code:   http.StatusOK,
-		Data:   admin,
+		StatusText: "success",
+		Status:     http.StatusOK,
+		Data:       admin,
 	})
 }
 
@@ -198,7 +198,7 @@ func UpdatePassword(c echo.Context) error {
 	if err != nil {
 		log.Printf("Failed unmarshalling")
 		return c.JSON(http.StatusInternalServerError, reponse.UpdateResponse{
-			Status: "failed", Code: http.StatusInternalServerError, Data: err.Error(),
+			StatusText: "failed", Status: http.StatusInternalServerError, Data: err.Error(),
 		})
 	}
 
@@ -208,26 +208,26 @@ func UpdatePassword(c echo.Context) error {
 
 	if admin == nil {
 		return c.JSON(http.StatusNotFound, reponse.UpdateResponse{
-			Status: "failed",
-			Code:   http.StatusNotFound,
-			Data:   "Admin does not exist, cannot update",
+			StatusText: "failed",
+			Status:     http.StatusNotFound,
+			Data:       "Admin does not exist, cannot update",
 		})
 	}
 
 	if requestData.Password == "" {
 		return c.JSON(http.StatusBadRequest, reponse.UpdateResponse{
-			Status: "BadRequest",
-			Code:   http.StatusBadRequest,
-			Data:   "Invalid input",
+			StatusText: "BadRequest",
+			Status:     http.StatusBadRequest,
+			Data:       "Invalid input",
 		})
 	}
 	admin.Password = requestData.Password
 	dbManager.Save(&admin)
 
 	return c.JSON(http.StatusOK, reponse.UpdateResponse{
-		Status: "success",
-		Code:   http.StatusOK,
-		Data:   admin,
+		StatusText: "success",
+		Status:     http.StatusOK,
+		Data:       admin,
 	})
 }
 
@@ -240,7 +240,7 @@ func UpdateRole(c echo.Context) error {
 	if err != nil {
 		log.Printf("Failed unmarshalling")
 		return c.JSON(http.StatusInternalServerError, reponse.UpdateResponse{
-			Status: "failed", Code: http.StatusInternalServerError, Data: err.Error(),
+			StatusText: "failed", Status: http.StatusInternalServerError, Data: err.Error(),
 		})
 	}
 
@@ -250,17 +250,17 @@ func UpdateRole(c echo.Context) error {
 
 	if admin == nil {
 		return c.JSON(http.StatusNotFound, reponse.UpdateResponse{
-			Status: "failed",
-			Code:   http.StatusNotFound,
-			Data:   "Admin does not exist, cannot update",
+			StatusText: "failed",
+			Status:     http.StatusNotFound,
+			Data:       "Admin does not exist, cannot update",
 		})
 	}
 
 	if requestData.Role == "" {
 		return c.JSON(http.StatusBadRequest, reponse.UpdateResponse{
-			Status: "BadRequest",
-			Code:   http.StatusBadRequest,
-			Data:   "Invalid input",
+			StatusText: "BadRequest",
+			Status:     http.StatusBadRequest,
+			Data:       "Invalid input",
 		})
 	}
 
@@ -268,9 +268,9 @@ func UpdateRole(c echo.Context) error {
 	dbManager.Save(&admin)
 
 	return c.JSON(http.StatusOK, reponse.UpdateResponse{
-		Status: "success",
-		Code:   http.StatusOK,
-		Data:   admin,
+		StatusText: "success",
+		Status:     http.StatusOK,
+		Data:       admin,
 	})
 }
 
@@ -290,18 +290,18 @@ func UpdateImage(c echo.Context) error {
 	src, err := file.Open()
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, reponse.UpdateResponse{
-			Status: "InternalServerError",
-			Code:   http.StatusInternalServerError,
-			Data:   err,
+			StatusText: "InternalServerError",
+			Status:     http.StatusInternalServerError,
+			Data:       err,
 		})
 	}
 
 	image, err := cloudinary.UploadImage(id, src)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, reponse.UpdateResponse{
-			Status: "BadRequest",
-			Code:   http.StatusBadRequest,
-			Data:   err,
+			StatusText: "BadRequest",
+			Status:     http.StatusBadRequest,
+			Data:       err,
 		})
 	}
 	defer func(src multipart.File) {
@@ -316,8 +316,8 @@ func UpdateImage(c echo.Context) error {
 	dbManager.Save(admin)
 
 	return c.JSON(http.StatusOK, reponse.UpdateResponse{
-		Status: "success",
-		Code:   http.StatusOK,
-		Data:   admin,
+		StatusText: "success",
+		Status:     http.StatusOK,
+		Data:       admin,
 	})
 }

@@ -49,6 +49,6 @@ func UploadImage(publicID string, input interface{}) (string, error) {
 	if err != nil {
 		return "", err
 	}
-
+	
 	return uploadParam.SecureURL, nil
 }

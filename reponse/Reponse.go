@@ -1,7 +1,7 @@
 package reponse
 
 type UpdateResponse struct {
-	Status string `json:"status"`
-	Code   int    `json:"code"`
-	Data   any    `json:"data"`
+	StatusText string `json:"statusText"`
+	Status     int    `json:"status"`
+	Data       any    `json:"data"`
 }
