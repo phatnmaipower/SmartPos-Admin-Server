@@ -1,10 +1,10 @@
 package admins
 
 import (
-	"../../cloudinary"
-	"../../db"
-	"../../model"
-	"../../reponse"
+	"app/cloudinary"
+	"app/db"
+	"app/model"
+	"app/reponse"
 	"fmt"
 	"github.com/labstack/echo"
 	"github.com/labstack/gommon/log"
@@ -13,7 +13,7 @@ import (
 )
 
 func GetAdmins(c echo.Context) error {
-	dbManager := db.DbManager()
+	dbManager := db.GetDbManager()
 	var admins []model.Admin
 	dbManager.Find(&admins)
 
@@ -32,7 +32,7 @@ func GetAdmin(c echo.Context) error {
 		})
 	}
 
-	dbManager := db.DbManager()
+	dbManager := db.GetDbManager()
 	var admins []model.Admin
 	dbManager.Find(&admins, "id = ?", requestData.ID)
 
@@ -40,7 +40,7 @@ func GetAdmin(c echo.Context) error {
 }
 
 func GetAdminsExisting(c echo.Context) error {
-	dbManager := db.DbManager()
+	dbManager := db.GetDbManager()
 	var adminsExisting []model.Admin
 	dbManager.Find(&adminsExisting, "type = ?", "existing")
 
@@ -48,7 +48,7 @@ func GetAdminsExisting(c echo.Context) error {
 }
 
 func GetAdminsInviting(c echo.Context) error {
-	dbManager := db.DbManager()
+	dbManager := db.GetDbManager()
 	var adminsInviting []model.Admin
 	dbManager.Find(&adminsInviting, "type = ?", "inviting")
 
@@ -69,7 +69,7 @@ func UpdateAdmin(c echo.Context) error {
 		})
 	}
 
-	dbManager := db.DbManager()
+	dbManager := db.GetDbManager()
 	admin := new(model.Admin)
 	dbManager.Find(&admin, "ID = ?", requestData.ID)
 
@@ -116,7 +116,7 @@ func UpdateEmail(c echo.Context) error {
 		})
 	}
 
-	dbManager := db.DbManager()
+	dbManager := db.GetDbManager()
 	admin := new(model.Admin)
 	dbManager.Find(&admin, "ID = ?", requestData.ID)
 
@@ -159,7 +159,7 @@ func UpdateName(c echo.Context) error {
 		})
 	}
 
-	dbManager := db.DbManager()
+	dbManager := db.GetDbManager()
 	admin := new(model.Admin)
 	dbManager.Find(&admin, "ID = ?", requestData.ID)
 
@@ -202,7 +202,7 @@ func UpdatePassword(c echo.Context) error {
 		})
 	}
 
-	dbManager := db.DbManager()
+	dbManager := db.GetDbManager()
 	admin := new(model.Admin)
 	dbManager.Find(&admin, "ID = ?", requestData.ID)
 
@@ -244,7 +244,7 @@ func UpdateRole(c echo.Context) error {
 		})
 	}
 
-	dbManager := db.DbManager()
+	dbManager := db.GetDbManager()
 	admin := new(model.Admin)
 	dbManager.Find(&admin, "ID = ?", requestData.ID)
 
@@ -278,7 +278,7 @@ func UpdateImage(c echo.Context) error {
 	// Read id
 	id := c.FormValue("id")
 
-	dbManager := db.DbManager()
+	dbManager := db.GetDbManager()
 	admin := new(model.Admin)
 	dbManager.Find(&admin, "ID = ?", id)
 

@@ -1,7 +1,8 @@
 package db
 
 import (
-	"../model"
+	envPostgres "app/config/postgres"
+	"app/model"
 	"fmt"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -11,7 +12,18 @@ var db *gorm.DB
 var err error
 
 func Init() {
-	dsn := "host=localhost user=postgres password=1 dbname=SmartPostTest port=5433 sslmode=disable TimeZone=Asia/Shanghai"
+	//dsn := fmt.Sprintf(
+	//	"host=%s user=%s password=%s dbname=%s port=%s sslmode=disable",
+	//	envPostgres.EnvHost(),
+	//	envPostgres.EnvUser(),
+	//	envPostgres.EnvPassword(),
+	//	envPostgres.EnvDbName(),
+	//	envPostgres.EnvPort(),
+	//	)
+	dsn := envPostgres.EnvCloudURL()
+
+	fmt.Print(dsn)
+
 	db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 	if err != nil {
@@ -26,6 +38,6 @@ func Init() {
 
 }
 
-func DbManager() *gorm.DB {
+func GetDbManager() *gorm.DB {
 	return db
 }

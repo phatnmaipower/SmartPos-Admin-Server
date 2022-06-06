@@ -1,11 +1,10 @@
 package route
 
 import (
-	"../api/admins"
-	"awesomeProject/api"
-	"github.com/labstack/echo/middleware"
-
+	"app/api"
+	"app/api/admins"
 	"github.com/labstack/echo"
+	"github.com/labstack/echo/middleware"
 )
 
 func Init() *echo.Echo {

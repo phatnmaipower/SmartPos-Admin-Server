@@ -1,8 +1,8 @@
 package main
 
 import (
-	"./db"
-	"./route"
+	"app/db"
+	"app/route"
 )
 
 func main() {
