@@ -17,7 +17,7 @@ func Init() {
 	if err != nil {
 		panic(err)
 	} else {
-		fmt.Print("connected")
+		fmt.Print("DB connected\n")
 	}
 	err = db.AutoMigrate(&model.Admin{})
 	if err != nil {
