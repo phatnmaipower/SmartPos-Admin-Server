@@ -1,29 +1,25 @@
 package route
 
 import (
-	"app/api"
+	get "app/api/admins/get"
+	update "app/api/admins/update"
 	"github.com/labstack/echo"
-	"github.com/labstack/echo/middleware"
 )
 
-func Init() *echo.Echo {
-	e := echo.New()
-	e.Use(middleware.CORS())
-	e.Use(middleware.LoggerWithConfig(
-		middleware.LoggerConfig{
-			Format: "method=${method}, uri=${uri}, status=${status}\n",
-		}))
-	e.Use(middleware.Recover())
-	e.GET("/", api.Home)
-
-	AdminsRouteInit(e)
-
-	///**
-	//Update admin info
-	//*/
-	//e.PUT("/admins/:id", admins.UpdateAdmin)
+func AdminsRouteInit(e *echo.Echo) {
+	adminRoute := e.Group("/admins")
+	adminRoute.GET("", get.Admins)
+	adminRoute.GET("/:id", get.Admin)
+	adminRoute.GET("/existing", get.AdminsExisting)
+	adminRoute.GET("/inviting", get.AdminsInviting)
+	adminRoute.PUT("/:id", update.Admin)
+	adminRoute.PUT("/:id/name", update.Name)
 	//
-
+	///**
+	//Update admin name
+	//*/
+	//e.PUT("/admins/:id/name", admins.UpdateAdminName)
+	//
 	///**
 	//Update admin name
 	//*/
@@ -49,5 +45,4 @@ func Init() *echo.Echo {
 	//*/
 	//e.PUT("/admins/:id/image", admins.UpdateImage)
 
-	return e
 }

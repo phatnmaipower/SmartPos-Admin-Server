@@ -1,4 +1,4 @@
-package admins
+package update
 
 import (
 	"app/cloudinary"
@@ -7,63 +7,18 @@ import (
 	"app/reponse"
 	"fmt"
 	"github.com/labstack/echo"
-	"github.com/labstack/gommon/log"
 	"mime/multipart"
 	"net/http"
 )
 
-func GetAdmins(c echo.Context) error {
-	dbManager := db.GetDbManager()
-	var admins []model.Admin
-	dbManager.Find(&admins)
-
-	return c.JSON(http.StatusOK, admins)
-}
-
-func GetAdmin(c echo.Context) error {
-	requestData := new(model.Admin)
-
-	err := c.Bind(requestData)
-
-	if err != nil {
-		log.Printf("Failed unmarshalling")
-		return c.JSON(http.StatusInternalServerError, reponse.UpdateResponse{
-			StatusText: "failed", Status: http.StatusInternalServerError, Data: err.Error(),
-		})
-	}
-
-	dbManager := db.GetDbManager()
-	var admins []model.Admin
-	dbManager.Find(&admins, "id = ?", requestData.ID)
-
-	return c.JSON(http.StatusOK, admins)
-}
-
-func GetAdminsExisting(c echo.Context) error {
-	dbManager := db.GetDbManager()
-	var adminsExisting []model.Admin
-	dbManager.Find(&adminsExisting, "type = ?", "existing")
-
-	return c.JSON(http.StatusOK, adminsExisting)
-}
-
-func GetAdminsInviting(c echo.Context) error {
-	dbManager := db.GetDbManager()
-	var adminsInviting []model.Admin
-	dbManager.Find(&adminsInviting, "type = ?", "inviting")
-
-	return c.JSON(http.StatusOK, adminsInviting)
-}
-
 // UpdateAdmin Only update: password, name, email and role. NO IMG
-func UpdateAdmin(c echo.Context) error {
+func Admin(c echo.Context) error {
 
 	requestData := new(model.Admin)
 
 	err := c.Bind(requestData)
 
 	if err != nil {
-		log.Printf("Failed unmarshalling")
 		return c.JSON(http.StatusInternalServerError, reponse.UpdateResponse{
 			StatusText: "failed", Status: http.StatusInternalServerError, Data: err.Error(),
 		})
@@ -103,14 +58,13 @@ func UpdateAdmin(c echo.Context) error {
 	})
 }
 
-func UpdateEmail(c echo.Context) error {
+func Email(c echo.Context) error {
 
 	requestData := new(model.Admin)
 
 	err := c.Bind(requestData)
 
 	if err != nil {
-		log.Printf("Failed unmarshalling")
 		return c.JSON(http.StatusInternalServerError, reponse.UpdateResponse{
 			StatusText: "failed", Status: http.StatusInternalServerError, Data: err.Error(),
 		})
@@ -146,14 +100,13 @@ func UpdateEmail(c echo.Context) error {
 	})
 }
 
-func UpdateName(c echo.Context) error {
+func CurrentName(c echo.Context) error {
 
 	requestData := new(model.Admin)
 
 	err := c.Bind(requestData)
 
 	if err != nil {
-		log.Printf("Failed unmarshalling")
 		return c.JSON(http.StatusInternalServerError, reponse.UpdateResponse{
 			StatusText: "failed", Status: http.StatusInternalServerError, Data: err.Error(),
 		})
@@ -189,6 +142,38 @@ func UpdateName(c echo.Context) error {
 	})
 }
 
+func Name(c echo.Context) error {
+	fmt.Print("/admins/:id/name")
+
+	id := c.Param("id")
+	firstName := c.FormValue("firstName")
+	lastName := c.FormValue("lastName")
+
+	fmt.Print(id, firstName, lastName)
+
+	dbManager := db.GetDbManager()
+	admin := new(model.Admin)
+	dbManager.Find(&admin, "ID = ?", id)
+
+	if admin == nil {
+		return c.JSON(http.StatusNotFound, reponse.UpdateResponse{
+			StatusText: "failed",
+			Status:     http.StatusNotFound,
+			Data:       "Admin does not exist, cannot update",
+		})
+	}
+
+	admin.Name = firstName + " " + lastName
+
+	dbManager.Save(&admin)
+
+	return c.JSON(http.StatusOK, reponse.UpdateResponse{
+		StatusText: "success",
+		Status:     http.StatusOK,
+		Data:       admin,
+	})
+}
+
 func UpdatePassword(c echo.Context) error {
 
 	requestData := new(model.Admin)
@@ -196,7 +181,6 @@ func UpdatePassword(c echo.Context) error {
 	err := c.Bind(requestData)
 
 	if err != nil {
-		log.Printf("Failed unmarshalling")
 		return c.JSON(http.StatusInternalServerError, reponse.UpdateResponse{
 			StatusText: "failed", Status: http.StatusInternalServerError, Data: err.Error(),
 		})
@@ -238,7 +222,6 @@ func UpdateRole(c echo.Context) error {
 	err := c.Bind(requestData)
 
 	if err != nil {
-		log.Printf("Failed unmarshalling")
 		return c.JSON(http.StatusInternalServerError, reponse.UpdateResponse{
 			StatusText: "failed", Status: http.StatusInternalServerError, Data: err.Error(),
 		})

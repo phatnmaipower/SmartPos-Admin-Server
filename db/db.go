@@ -12,15 +12,15 @@ var db *gorm.DB
 var err error
 
 func Init() {
-	//dsn := fmt.Sprintf(
-	//	"host=%s user=%s password=%s dbname=%s port=%s sslmode=disable",
-	//	envPostgres.EnvHost(),
-	//	envPostgres.EnvUser(),
-	//	envPostgres.EnvPassword(),
-	//	envPostgres.EnvDbName(),
-	//	envPostgres.EnvPort(),
-	//	)
-	dsn := envPostgres.EnvCloudURL()
+	dsn := fmt.Sprintf(
+		"host=%s user=%s password=%s dbname=%s port=%s",
+		envPostgres.EnvHost(),
+		envPostgres.EnvUser(),
+		envPostgres.EnvPassword(),
+		envPostgres.EnvDbName(),
+		envPostgres.EnvPort(),
+	)
+	//dsn := envPostgres.EnvCloudURL()
 
 	fmt.Print(dsn)
 
